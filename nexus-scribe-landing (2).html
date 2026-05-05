@@ -1,0 +1,1947 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nexus Intelligence Scribe — Reclaim Your Life</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  /* ===== NEXUS BRAND VARIABLES ===== */
+  :root {
+    --nexus-navy: #0B2545;
+    --nexus-blue: #1B4F8A;
+    --nexus-teal: #00A8B5;
+    --nexus-teal-light: #00C8D7;
+    --nexus-white: #FFFFFF;
+    --nexus-off-white: #F4F8FC;
+    --nexus-light-gray: #E8EFF7;
+    --nexus-mid-gray: #6B7E99;
+    --nexus-dark-text: #0B2545;
+    --nexus-accent: #FF6B35;
+    --nexus-green: #22C55E;
+    --font-display: 'DM Serif Display', Georgia, serif;
+    --font-body: 'DM Sans', system-ui, sans-serif;
+    --shadow-card: 0 4px 24px rgba(11,37,69,0.10);
+    --shadow-elevated: 0 16px 48px rgba(11,37,69,0.18);
+    --border-radius: 12px;
+    --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-body);
+    color: var(--nexus-dark-text);
+    background: var(--nexus-white);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ===== STICKY HEADER CTA ===== */
+  .sticky-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: var(--nexus-navy);
+    padding: 0 24px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.25);
+    transform: translateY(0);
+    transition: var(--transition);
+  }
+
+  .sticky-header.hidden { transform: translateY(-100%); }
+
+  .sticky-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+
+  .sticky-logo-icon {
+    width: 34px;
+    height: 34px;
+    background: var(--nexus-teal);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-size: 18px;
+    color: white;
+    font-weight: 400;
+  }
+
+  .sticky-logo-text {
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 17px;
+    color: white;
+    letter-spacing: -0.3px;
+  }
+
+  .sticky-logo-text span { color: var(--nexus-teal); }
+
+  .sticky-nav-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .sticky-tagline {
+    color: rgba(255,255,255,0.65);
+    font-size: 13px;
+    font-weight: 400;
+    display: none;
+  }
+
+  @media (min-width: 640px) { .sticky-tagline { display: block; } }
+
+  .btn-primary {
+    background: var(--nexus-teal);
+    color: white;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 14px;
+    padding: 10px 22px;
+    border-radius: 100px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: var(--transition);
+    white-space: nowrap;
+    letter-spacing: 0.01em;
+  }
+
+  .btn-primary:hover {
+    background: var(--nexus-teal-light);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(0,168,181,0.40);
+  }
+
+  .btn-primary-large {
+    font-size: 16px;
+    padding: 14px 32px;
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--nexus-navy);
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 15px;
+    padding: 12px 24px;
+    border-radius: 100px;
+    border: 2px solid var(--nexus-blue);
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: var(--transition);
+  }
+
+  .btn-outline:hover {
+    background: var(--nexus-blue);
+    color: white;
+    transform: translateY(-1px);
+  }
+
+  /* ===== HERO SECTION ===== */
+  .hero {
+    margin-top: 60px;
+    min-height: calc(100vh - 60px);
+    background: var(--nexus-navy);
+    position: relative;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+  }
+
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; min-height: auto; padding-bottom: 60px; }
+  }
+
+  .hero-bg-mesh {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 70% 50%, rgba(0,168,181,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 80% at 10% 20%, rgba(27,79,138,0.6) 0%, transparent 70%),
+      linear-gradient(135deg, #0B2545 0%, #0D2F5A 50%, #0B2545 100%);
+  }
+
+  .hero-grid-lines {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    padding: 80px 60px 80px 80px;
+    max-width: 640px;
+  }
+
+  @media (max-width: 1100px) { .hero-content { padding: 60px 40px 60px 50px; } }
+  @media (max-width: 900px) { .hero-content { padding: 60px 32px; max-width: 100%; } }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0,168,181,0.15);
+    border: 1px solid rgba(0,168,181,0.35);
+    border-radius: 100px;
+    padding: 6px 14px;
+    margin-bottom: 28px;
+  }
+
+  .hero-badge-dot {
+    width: 7px; height: 7px;
+    background: var(--nexus-teal);
+    border-radius: 50%;
+    animation: pulse-dot 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.3); }
+  }
+
+  .hero-badge span {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--nexus-teal);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .hero-headline {
+    font-family: var(--font-display);
+    font-size: clamp(42px, 5vw, 66px);
+    line-height: 1.06;
+    color: white;
+    margin-bottom: 10px;
+    letter-spacing: -1px;
+  }
+
+  .hero-headline em {
+    font-style: italic;
+    color: var(--nexus-teal);
+  }
+
+  .hero-subheadline {
+    font-family: var(--font-display);
+    font-size: clamp(22px, 2.5vw, 32px);
+    color: rgba(255,255,255,0.6);
+    font-weight: 400;
+    margin-bottom: 24px;
+    line-height: 1.2;
+  }
+
+  .hero-body {
+    font-size: 17px;
+    color: rgba(255,255,255,0.72);
+    line-height: 1.7;
+    margin-bottom: 36px;
+    max-width: 520px;
+  }
+
+  .hero-cta-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    align-items: center;
+    margin-bottom: 44px;
+  }
+
+  .btn-video {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: white;
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 15px;
+    padding: 13px 22px;
+    border-radius: 100px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: var(--transition);
+  }
+
+  .btn-video:hover {
+    background: rgba(255,255,255,0.14);
+    border-color: rgba(255,255,255,0.35);
+    transform: translateY(-1px);
+  }
+
+  .play-icon {
+    width: 28px; height: 28px;
+    background: var(--nexus-teal);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .play-icon svg { margin-left: 2px; }
+
+  .hero-stat-row {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+
+  .hero-stat { display: flex; flex-direction: column; gap: 2px; }
+
+  .hero-stat-number {
+    font-family: var(--font-display);
+    font-size: 32px;
+    color: var(--nexus-teal);
+    line-height: 1;
+  }
+
+  .hero-stat-label {
+    font-size: 12px;
+    color: rgba(255,255,255,0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 500;
+  }
+
+  /* ===== HERO IMAGE SPLIT ===== */
+  .hero-visual {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 60px 60px 20px;
+    height: 100%;
+  }
+
+  @media (max-width: 900px) {
+    .hero-visual { padding: 0 32px 60px; }
+  }
+
+  .doctor-comparison {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    width: 100%;
+    max-width: 480px;
+  }
+
+  .doctor-card {
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    aspect-ratio: 3/4;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .doctor-card-image {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 72px;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .doctor-card.unhappy .doctor-card-image {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  }
+
+  .doctor-card.happy .doctor-card-image {
+    background: linear-gradient(135deg, #0a3d2e 0%, #065f46 100%);
+  }
+
+  .doctor-card-label {
+    padding: 12px 16px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    text-align: center;
+  }
+
+  .doctor-card.unhappy .doctor-card-label {
+    background: rgba(220,38,38,0.15);
+    color: #FCA5A5;
+    border-top: 1px solid rgba(220,38,38,0.2);
+  }
+
+  .doctor-card.happy .doctor-card-label {
+    background: rgba(34,197,94,0.15);
+    color: #86EFAC;
+    border-top: 1px solid rgba(34,197,94,0.2);
+  }
+
+  .doctor-card-tagline {
+    font-size: 10px;
+    opacity: 0.7;
+    text-transform: none;
+    font-weight: 400;
+    letter-spacing: 0;
+    display: block;
+    margin-top: 2px;
+  }
+
+  /* SVG doctor illustrations */
+  .doc-svg { width: 100%; max-width: 140px; }
+
+  /* Floating scribe widget */
+  .scribe-widget {
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--nexus-navy);
+    border: 1px solid rgba(0,168,181,0.35);
+    border-radius: 14px;
+    padding: 12px 18px;
+    white-space: nowrap;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    z-index: 10;
+  }
+
+  .scribe-widget-inner {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .scribe-recording-dot {
+    width: 8px; height: 8px;
+    background: #EF4444;
+    border-radius: 50%;
+    animation: blink 1.2s ease-in-out infinite;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .scribe-widget-text {
+    font-size: 11px;
+    color: rgba(255,255,255,0.8);
+    font-weight: 500;
+  }
+
+  .scribe-widget-text strong { color: var(--nexus-teal); }
+
+  /* ===== TRUST BAR ===== */
+  .trust-bar {
+    background: var(--nexus-off-white);
+    border-bottom: 1px solid var(--nexus-light-gray);
+    padding: 20px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .trust-bar-label {
+    font-size: 12px;
+    color: var(--nexus-mid-gray);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+  }
+
+  .trust-bar-divider {
+    width: 1px; height: 24px;
+    background: var(--nexus-light-gray);
+  }
+
+  .trust-badges {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .trust-badge-img {
+    height: 48px;
+    width: auto;
+    object-fit: contain;
+    filter: none;
+    transition: var(--transition);
+  }
+
+  .trust-badge-img:hover { transform: scale(1.05); }
+
+  /* ===== SECTION STYLES ===== */
+  .section { padding: 96px 32px; }
+  .section-sm { padding: 64px 32px; }
+  .container { max-width: 1120px; margin: 0 auto; }
+  .container-narrow { max-width: 800px; margin: 0 auto; }
+
+  .section-eyebrow {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--nexus-teal);
+    margin-bottom: 12px;
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(32px, 4vw, 48px);
+    line-height: 1.1;
+    color: var(--nexus-navy);
+    margin-bottom: 16px;
+    letter-spacing: -0.5px;
+  }
+
+  .section-title em {
+    font-style: italic;
+    color: var(--nexus-teal);
+  }
+
+  .section-subtitle {
+    font-size: 17px;
+    color: var(--nexus-mid-gray);
+    line-height: 1.7;
+    max-width: 600px;
+  }
+
+  .section-header {
+    margin-bottom: 56px;
+  }
+
+  .section-header.centered {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .section-header.centered .section-subtitle { text-align: center; }
+
+  /* ===== PROBLEM / BEFORE-AFTER ===== */
+  .problem-section { background: white; }
+
+  .before-after-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: var(--shadow-elevated);
+  }
+
+  @media (max-width: 700px) { .before-after-grid { grid-template-columns: 1fr; } }
+
+  .before-panel, .after-panel {
+    padding: 48px 40px;
+    position: relative;
+  }
+
+  .before-panel {
+    background: #FEF2F2;
+    border-right: 2px solid #FECACA;
+  }
+
+  .after-panel { background: #F0FDF4; }
+
+  .panel-icon {
+    width: 52px; height: 52px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+  }
+
+  .before-panel .panel-icon { background: #FEE2E2; }
+  .after-panel .panel-icon { background: #DCFCE7; }
+
+  .panel-title {
+    font-family: var(--font-display);
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+
+  .before-panel .panel-title { color: #991B1B; }
+  .after-panel .panel-title { color: #166534; }
+
+  .panel-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+
+  .panel-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  .before-panel .panel-list li { color: #7F1D1D; }
+  .after-panel .panel-list li { color: #14532D; }
+
+  .list-icon {
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+    font-size: 11px;
+  }
+
+  .before-panel .list-icon { background: #FCA5A5; color: #991B1B; }
+  .after-panel .list-icon { background: #86EFAC; color: #166534; }
+
+  .vs-divider {
+    position: absolute;
+    top: 50%;
+    right: -22px;
+    transform: translateY(-50%);
+    width: 44px;
+    height: 44px;
+    background: var(--nexus-navy);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 13px;
+    z-index: 5;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+    letter-spacing: 0.05em;
+  }
+
+  @media (max-width: 700px) {
+    .vs-divider { right: 50%; bottom: -22px; top: auto; transform: translateX(50%); }
+  }
+
+  /* ===== HOW IT WORKS ===== */
+  .how-section { background: var(--nexus-off-white); }
+
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    position: relative;
+  }
+
+  @media (max-width: 800px) { .steps-grid { grid-template-columns: 1fr; } }
+
+  .step-connector {
+    position: absolute;
+    top: 44px;
+    left: calc(33.33% + 12px);
+    right: calc(33.33% + 12px);
+    height: 2px;
+    background: linear-gradient(90deg, var(--nexus-teal), var(--nexus-blue));
+    display: none;
+  }
+
+  @media (min-width: 801px) { .step-connector { display: block; } }
+
+  .step-card {
+    background: white;
+    border-radius: var(--border-radius);
+    padding: 36px 28px;
+    box-shadow: var(--shadow-card);
+    position: relative;
+    border: 1px solid var(--nexus-light-gray);
+    transition: var(--transition);
+  }
+
+  .step-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-elevated);
+    border-color: var(--nexus-teal);
+  }
+
+  .step-number {
+    width: 48px; height: 48px;
+    background: var(--nexus-navy);
+    color: white;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-size: 20px;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .step-title {
+    font-family: var(--font-body);
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--nexus-navy);
+    margin-bottom: 10px;
+  }
+
+  .step-desc {
+    font-size: 14px;
+    color: var(--nexus-mid-gray);
+    line-height: 1.65;
+  }
+
+  .step-time {
+    margin-top: 16px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(0,168,181,0.08);
+    border: 1px solid rgba(0,168,181,0.2);
+    border-radius: 100px;
+    padding: 4px 12px;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--nexus-teal);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  /* ===== VIDEO PLACEHOLDER ===== */
+  .video-section { background: var(--nexus-navy); overflow: hidden; position: relative; }
+
+  .video-bg {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 60% at 50% 50%, rgba(0,168,181,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .video-wrapper {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .video-title {
+    font-family: var(--font-display);
+    font-size: clamp(28px, 4vw, 44px);
+    color: white;
+    margin-bottom: 8px;
+  }
+
+  .video-subtitle {
+    color: rgba(255,255,255,0.6);
+    font-size: 16px;
+    margin-bottom: 40px;
+  }
+
+  .video-frame {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 20px;
+    aspect-ratio: 16/9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+    cursor: pointer;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .video-frame:hover { border-color: rgba(0,168,181,0.5); }
+
+  .video-play-btn {
+    width: 80px; height: 80px;
+    background: var(--nexus-teal);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+    box-shadow: 0 0 0 0 rgba(0,168,181,0.4);
+    animation: pulse-ring 2.5s ease-out infinite;
+  }
+
+  @keyframes pulse-ring {
+    0% { box-shadow: 0 0 0 0 rgba(0,168,181,0.5); }
+    70% { box-shadow: 0 0 0 24px rgba(0,168,181,0); }
+    100% { box-shadow: 0 0 0 0 rgba(0,168,181,0); }
+  }
+
+  .video-frame:hover .video-play-btn {
+    background: var(--nexus-teal-light);
+    transform: scale(1.08);
+  }
+
+  .video-caption {
+    color: rgba(255,255,255,0.5);
+    font-size: 14px;
+  }
+
+  .video-caption strong { color: white; }
+
+  /* ===== TESTIMONIALS ===== */
+  .testimonials-section { background: white; }
+
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  @media (max-width: 900px) { .testimonials-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 1200px) and (min-width: 901px) { .testimonials-grid { grid-template-columns: 1fr 1fr; } }
+
+  .testimonial-card {
+    background: var(--nexus-off-white);
+    border: 1px solid var(--nexus-light-gray);
+    border-radius: 16px;
+    padding: 32px 28px;
+    display: flex;
+    flex-direction: column;
+    transition: var(--transition);
+    position: relative;
+  }
+
+  .testimonial-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-elevated);
+    border-color: rgba(0,168,181,0.3);
+  }
+
+  .quote-mark {
+    font-family: var(--font-display);
+    font-size: 72px;
+    line-height: 0.6;
+    color: var(--nexus-teal);
+    opacity: 0.25;
+    margin-bottom: 16px;
+    user-select: none;
+  }
+
+  .testimonial-text {
+    font-size: 15px;
+    line-height: 1.72;
+    color: #374151;
+    flex: 1;
+    margin-bottom: 24px;
+    font-style: italic;
+  }
+
+  .testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    border-top: 1px solid var(--nexus-light-gray);
+    padding-top: 20px;
+  }
+
+.author-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.author-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+  .author-name {
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--nexus-navy);
+  }
+
+  .author-title {
+    font-size: 12px;
+    color: var(--nexus-mid-gray);
+    margin-top: 1px;
+  }
+
+  .star-row {
+    display: flex;
+    gap: 2px;
+    margin-bottom: 12px;
+  }
+
+  .star { color: #F59E0B; font-size: 14px; }
+
+  /* ===== COMPARISON TABLE ===== */
+  .comparison-section { background: var(--nexus-off-white); }
+
+  .comparison-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: var(--shadow-elevated);
+  }
+
+  .comparison-table thead tr th {
+    padding: 20px 24px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+
+  .comparison-table thead tr th:first-child { text-align: left; }
+
+  .col-feature { background: var(--nexus-navy); color: white; width: 32%; }
+  .col-nexus { background: var(--nexus-teal); color: white; }
+  .col-competitor { background: #E5E7EB; color: #374151; }
+
+  .col-nexus-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .col-nexus-badge {
+    font-size: 10px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 100px;
+    padding: 2px 10px;
+    letter-spacing: 0.06em;
+    font-weight: 500;
+  }
+
+  .comparison-table tbody tr td {
+    padding: 16px 24px;
+    font-size: 14px;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+  }
+
+  .comparison-table tbody tr:last-child td { border-bottom: none; }
+
+  .comparison-table tbody tr:nth-child(even) td { background: rgba(0,0,0,0.02); }
+
+  .comparison-table tbody tr td:first-child {
+    font-weight: 600;
+    color: var(--nexus-navy);
+    background: white;
+  }
+
+  .comparison-table tbody tr td:not(:first-child) {
+    text-align: center;
+  }
+
+  .check { color: var(--nexus-green); font-size: 20px; }
+  .cross { color: #EF4444; font-size: 20px; }
+  .partial { color: #F59E0B; font-size: 14px; font-weight: 600; }
+
+  .comparison-disclaimer {
+    margin-top: 16px;
+    font-size: 11px;
+    color: var(--nexus-mid-gray);
+    text-align: center;
+    line-height: 1.6;
+    padding: 0 20px;
+  }
+
+  /* ===== FEATURES GRID ===== */
+  .features-section { background: white; }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  @media (max-width: 900px) { .features-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 600px) { .features-grid { grid-template-columns: 1fr; } }
+
+  .feature-card {
+    padding: 28px;
+    border: 1.5px solid var(--nexus-light-gray);
+    border-radius: 14px;
+    transition: var(--transition);
+  }
+
+  .feature-card:hover {
+    border-color: var(--nexus-teal);
+    box-shadow: var(--shadow-card);
+    transform: translateY(-2px);
+  }
+
+  .feature-icon {
+    width: 44px; height: 44px;
+    border-radius: 10px;
+    background: rgba(0,168,181,0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+    font-size: 20px;
+  }
+
+  .feature-title {
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--nexus-navy);
+    margin-bottom: 8px;
+  }
+
+  .feature-desc {
+    font-size: 14px;
+    color: var(--nexus-mid-gray);
+    line-height: 1.65;
+  }
+
+  /* ===== FINAL CTA SECTION ===== */
+  .final-cta {
+    background: linear-gradient(135deg, var(--nexus-navy) 0%, #0D3569 50%, #0B2545 100%);
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+  }
+
+  .final-cta-bg {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 80% at 50% 50%, rgba(0,168,181,0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .final-cta-content { position: relative; z-index: 2; }
+
+  .final-cta-title {
+    font-family: var(--font-display);
+    font-size: clamp(36px, 5vw, 60px);
+    color: white;
+    line-height: 1.08;
+    margin-bottom: 16px;
+    letter-spacing: -0.5px;
+  }
+
+  .final-cta-title em { font-style: italic; color: var(--nexus-teal); }
+
+  .final-cta-subtitle {
+    font-size: 18px;
+    color: rgba(255,255,255,0.65);
+    margin-bottom: 40px;
+    max-width: 560px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+  }
+
+  .final-cta-buttons {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 28px;
+  }
+
+  .btn-primary-hero {
+    background: var(--nexus-teal);
+    color: white;
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 17px;
+    padding: 18px 40px;
+    border-radius: 100px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: var(--transition);
+    box-shadow: 0 4px 24px rgba(0,168,181,0.4);
+  }
+
+  .btn-primary-hero:hover {
+    background: var(--nexus-teal-light);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(0,168,181,0.5);
+  }
+
+  .btn-ghost-white {
+    background: rgba(255,255,255,0.08);
+    border: 1.5px solid rgba(255,255,255,0.25);
+    color: white;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 16px;
+    padding: 17px 32px;
+    border-radius: 100px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: var(--transition);
+  }
+
+  .btn-ghost-white:hover {
+    background: rgba(255,255,255,0.14);
+    border-color: rgba(255,255,255,0.4);
+    transform: translateY(-2px);
+  }
+
+  .cta-micro {
+    font-size: 13px;
+    color: rgba(255,255,255,0.45);
+  }
+
+  /* ===== FOOTER ===== */
+  .footer {
+    background: #060E1C;
+    padding: 40px 32px;
+    text-align: center;
+  }
+
+  .footer-logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    margin-bottom: 16px;
+  }
+
+  .footer-logo-icon {
+    width: 32px; height: 32px;
+    background: var(--nexus-teal);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-size: 16px;
+    color: white;
+  }
+
+  .footer-logo-text {
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 16px;
+    color: white;
+  }
+
+  .footer-logo-text span { color: var(--nexus-teal); }
+
+  .footer-links {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+  }
+
+  .footer-links a {
+    font-size: 13px;
+    color: rgba(255,255,255,0.4);
+    text-decoration: none;
+    transition: var(--transition);
+  }
+
+  .footer-links a:hover { color: rgba(255,255,255,0.7); }
+
+  .footer-copy {
+    font-size: 12px;
+    color: rgba(255,255,255,0.25);
+    line-height: 1.6;
+  }
+
+  /* ===== SCROLL ANIMATIONS ===== */
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .reveal.revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+
+  /* ===== MODAL ===== */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .modal-overlay.open { display: flex; }
+
+  .modal-box {
+    background: white;
+    border-radius: 20px;
+    padding: 48px 40px;
+    max-width: 480px;
+    width: 100%;
+    text-align: center;
+    position: relative;
+    animation: modal-in 0.3s ease;
+  }
+
+  @keyframes modal-in {
+    from { opacity: 0; transform: scale(0.92); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 16px; right: 16px;
+    background: none;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+    color: var(--nexus-mid-gray);
+    line-height: 1;
+    padding: 4px;
+  }
+
+  .modal-icon {
+    width: 64px; height: 64px;
+    background: rgba(0,168,181,0.1);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    font-size: 28px;
+  }
+
+  .modal-title {
+    font-family: var(--font-display);
+    font-size: 26px;
+    color: var(--nexus-navy);
+    margin-bottom: 8px;
+  }
+
+  .modal-subtitle {
+    font-size: 15px;
+    color: var(--nexus-mid-gray);
+    margin-bottom: 28px;
+    line-height: 1.6;
+  }
+
+  .modal-form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    text-align: left;
+  }
+
+  .modal-input {
+    width: 100%;
+    padding: 13px 16px;
+    border: 1.5px solid var(--nexus-light-gray);
+    border-radius: 10px;
+    font-family: var(--font-body);
+    font-size: 15px;
+    color: var(--nexus-navy);
+    transition: var(--transition);
+    outline: none;
+  }
+
+  .modal-input:focus { border-color: var(--nexus-teal); }
+  .modal-input::placeholder { color: var(--nexus-mid-gray); }
+
+  .modal-submit {
+    background: var(--nexus-teal);
+    color: white;
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 16px;
+    padding: 15px;
+    border-radius: 100px;
+    border: none;
+    cursor: pointer;
+    transition: var(--transition);
+    margin-top: 4px;
+  }
+
+  .modal-submit:hover {
+    background: var(--nexus-teal-light);
+    transform: translateY(-1px);
+  }
+
+  .modal-privacy {
+    font-size: 11px;
+    color: var(--nexus-mid-gray);
+    text-align: center;
+    margin-top: 10px;
+  }
+
+  /* ===== STATS ROW ===== */
+  .stats-section { background: var(--nexus-navy); }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+  }
+
+  @media (max-width: 800px) { .stats-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 500px) { .stats-grid { grid-template-columns: 1fr; } }
+
+  .stat-item {
+    padding: 48px 32px;
+    text-align: center;
+    border-right: 1px solid rgba(255,255,255,0.08);
+    position: relative;
+  }
+
+  .stat-item:last-child { border-right: none; }
+
+  .stat-number-large {
+    font-family: var(--font-display);
+    font-size: clamp(42px, 5vw, 60px);
+    color: var(--nexus-teal);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .stat-label-large {
+    font-size: 14px;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.5;
+  }
+
+  .stat-source {
+    font-size: 10px;
+    color: rgba(255,255,255,0.25);
+    margin-top: 6px;
+    font-style: italic;
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== STICKY HEADER ===== -->
+<header class="sticky-header" id="stickyHeader">
+  <a href="#" class="sticky-logo">
+    <div class="sticky-logo-icon">N</div>
+    <div class="sticky-logo-text">Nexus<span>Clinical</span></div>
+  </a>
+  <div class="sticky-nav-right">
+    <span class="sticky-tagline">AI-Native EHR · Built for Physicians</span>
+    <a href="#" class="btn-primary" onclick="openModal(event)">
+      Schedule Free Demo
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+</header>
+
+<!-- ===== HERO SECTION ===== -->
+<section class="hero">
+  <div class="hero-bg-mesh"></div>
+  <div class="hero-grid-lines"></div>
+
+  <div class="hero-content">
+    <div class="hero-badge">
+      <div class="hero-badge-dot"></div>
+      <span>Nexus Intelligence Scribe — Now Live</span>
+    </div>
+
+    <h1 class="hero-headline">
+      Reclaim<br><em>Your Life.</em>
+    </h1>
+    <p class="hero-subheadline">Stop charting. Start healing.</p>
+
+    <p class="hero-body">
+      Nexus Intelligence Scribe is the only AI medical scribe built <em style="color:rgba(255,255,255,0.9);font-style:normal;font-weight:600;">natively inside your EHR</em> — not bolted on. It listens, thinks, and documents every patient encounter in real time so you can look your patient in the eye again.
+    </p>
+
+    <div class="hero-cta-group">
+      <a href="#" class="btn-primary btn-primary-large" onclick="openModal(event)">
+        Schedule My Free Demo
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <a href="#video" class="btn-video">
+        <div class="play-icon">
+          <svg width="12" height="14" viewBox="0 0 12 14" fill="white"><path d="M1 1l10 6L1 13V1z"/></svg>
+        </div>
+        Watch 2-Min Overview
+      </a>
+    </div>
+
+    <div class="hero-stat-row">
+      <div class="hero-stat">
+        <span class="hero-stat-number">50%</span>
+        <span class="hero-stat-label">Less charting time</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-number">2 hrs</span>
+        <span class="hero-stat-label">Saved per day</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-number">100%</span>
+        <span class="hero-stat-label">Native to your EHR</span>
+      </div>
+    </div>
+  </div>
+
+<!-- HERO VISUAL -->
+<div class="hero-visual">
+  <div style="position:relative; width:100%; max-width:480px; margin:auto;">
+
+    <!-- Your New Image -->
+    <img 
+      src="image.webp" 
+      alt="Before and After Nexus Scribe"
+      style="width:100%; border-radius:20px; display:block;"
+    >
+
+    <!-- Floating Scribe Widget (UNCHANGED, just kept in same container) -->
+    <div class="scribe-widget" style="position:relative; margin-top:24px; left:auto; transform:none; bottom:auto;">
+      <div class="scribe-widget-inner">
+        <div class="scribe-recording-dot"></div>
+        <div class="scribe-widget-text">
+          <strong>Nexus Intelligence Scribe</strong> is listening &amp; documenting...
+        </div>
+        <div style="margin-left:8px; background:rgba(0,168,181,0.15); border-radius:6px; padding:4px 8px; font-size:10px; color:#00A8B5; font-weight:700;">LIVE</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</section>
+
+<!-- ===== TRUST BAR ===== -->
+<div class="trust-bar">
+  <span class="trust-bar-label">Recognized By</span>
+  <div class="trust-bar-divider"></div>
+  <div class="trust-badges">
+    <img src="https://brand-assets.softwareadvice.com/badge/90093217-a8ad-4a73-b9e3-1de4b9857e00.svg" alt="Software Advice Badge" class="trust-badge-img" onerror="this.style.display='none'">
+    <img src="https://brand-assets.softwareadvice.com/badge/01aadb00-5dde-4291-9706-84ff269e2875.svg" alt="Software Advice Top Rated" class="trust-badge-img" onerror="this.style.display='none'">
+    <img src="https://brand-assets.capterra.com/badge/472b61e9-3792-4a5b-96ac-713b8dcf2bdf.svg" alt="Capterra Badge" class="trust-badge-img" onerror="this.style.display='none'">
+    <!-- Fallback text badges if images fail -->
+    <div style="display:flex;gap:10px;flex-wrap:wrap;" id="fallbackBadges">
+      <div style="background:#0B2545;color:white;padding:8px 14px;border-radius:8px;font-size:11px;font-weight:700;letter-spacing:0.05em;">⭐ SOFTWARE ADVICE<br><span style="color:#00A8B5;font-size:10px;">Top Rated</span></div>
+      <div style="background:#0B2545;color:white;padding:8px 14px;border-radius:8px;font-size:11px;font-weight:700;letter-spacing:0.05em;">⭐ CAPTERRA<br><span style="color:#00A8B5;font-size:10px;">Best Value</span></div>
+      <div style="background:#0B2545;color:white;padding:8px 14px;border-radius:8px;font-size:11px;font-weight:700;letter-spacing:0.05em;">🏆 GARTNER<br><span style="color:#00A8B5;font-size:10px;">Peer Insights</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== STATISTICS ===== -->
+<section class="stats-section section-sm" style="padding-top:0;padding-bottom:0;">
+  <div class="stats-grid">
+    <div class="stat-item reveal">
+      <div class="stat-number-large">2+ hrs</div>
+      <div class="stat-label-large">Saved per physician<br>per day on documentation</div>
+      <div class="stat-source">ScienceDirect, 2024</div>
+    </div>
+    <div class="stat-item reveal reveal-delay-1">
+      <div class="stat-number-large">74%</div>
+      <div class="stat-label-large">Of physicians report EHR<br>contributes to burnout</div>
+      <div class="stat-source">ScienceDirect, 2024</div>
+    </div>
+    <div class="stat-item reveal reveal-delay-2">
+      <div class="stat-number-large">$1.3M</div>
+      <div class="stat-label-large">Cost to replace<br>one burned-out physician</div>
+      <div class="stat-source">Healthcare Economics, 2024</div>
+    </div>
+    <div class="stat-item reveal reveal-delay-3">
+      <div class="stat-number-large">50%</div>
+      <div class="stat-label-large">Reduction in charting<br>time with Nexus Scribe</div>
+      <div class="stat-source">Nexus Clinical data, 2025</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PROBLEM / BEFORE-AFTER ===== -->
+<section class="section problem-section">
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="section-eyebrow">The Real Cost of Documentation Burden</p>
+      <h2 class="section-title">Is your EHR costing you your <em>career?</em></h2>
+      <p class="section-subtitle">For too many physicians, the patient visit ended. The work didn't. Nexus changes that permanently.</p>
+    </div>
+
+    <div class="before-after-grid reveal">
+      <div class="before-panel">
+        <div class="panel-icon">😩</div>
+        <h3 class="panel-title">Without Nexus Scribe</h3>
+        <ul class="panel-list">
+          <li><span class="list-icon">✕</span>2–4 hours of post-visit charting every night</li>
+          <li><span class="list-icon">✕</span>Eyes on the screen, not on the patient</li>
+          <li><span class="list-icon">✕</span>Dictating notes from memory after a full day</li>
+          <li><span class="list-icon">✕</span>Cognitive overload → missed nuances → risk</li>
+          <li><span class="list-icon">✕</span>"Inbox dread" — hundreds of chart tasks pending</li>
+          <li><span class="list-icon">✕</span>Weekend catch-up becoming the new normal</li>
+          <li><span class="list-icon">✕</span>Thinking about quitting medicine altogether</li>
+        </ul>
+        <div class="vs-divider">VS</div>
+      </div>
+      <div class="after-panel">
+        <div class="panel-icon">😊</div>
+        <h3 class="panel-title">With Nexus Intelligence Scribe</h3>
+        <ul class="panel-list">
+          <li><span class="list-icon">✓</span>Chart notes auto-generated during the visit</li>
+          <li><span class="list-icon">✓</span>Full eye contact restored with your patients</li>
+          <li><span class="list-icon">✓</span>Review &amp; sign in under 2 minutes</li>
+          <li><span class="list-icon">✓</span>Specialty-specific language understood natively</li>
+          <li><span class="list-icon">✓</span>ICD-10 &amp; CPT codes suggested automatically</li>
+          <li><span class="list-icon">✓</span>Leave on time. Every day.</li>
+          <li><span class="list-icon">✓</span>Rediscover why you became a physician</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== HOW IT WORKS ===== -->
+<section class="section how-section">
+  <div class="container">
+    <div class="section-header centered reveal">
+      <p class="section-eyebrow">How Nexus Intelligence Scribe Works</p>
+      <h2 class="section-title">3 steps. Zero extra effort.</h2>
+      <p class="section-subtitle">From patient walks in to chart signed — without you typing a single word.</p>
+    </div>
+
+    <div class="steps-grid">
+      <div class="step-connector"></div>
+      <div class="step-card reveal">
+        <div class="step-number">1</div>
+        <div class="step-title">Encounter Begins</div>
+        <p class="step-desc">Tap "Start Scribe" inside Nexus EHR. The ambient AI begins listening to your natural conversation with the patient — no scripting, no special phrases needed.</p>
+        <div class="step-time">⚡ 1 tap to activate</div>
+      </div>
+      <div class="step-card reveal reveal-delay-1">
+        <div class="step-number">2</div>
+        <div class="step-title">AI Documents In Real Time</div>
+        <p class="step-desc">Nexus Intelligence captures, interprets, and structures the encounter into a specialty-specific chart note. Diagnoses, medications, plans — all organized as you speak.</p>
+        <div class="step-time">🎙️ Fully ambient</div>
+      </div>
+      <div class="step-card reveal reveal-delay-2">
+        <div class="step-number">3</div>
+        <div class="step-title">Review &amp; Sign</div>
+        <p class="step-desc">The completed note is ready the moment the patient leaves. Review it in under 2 minutes, make any edits, and sign — all within the same EHR environment where you bill and prescribe.</p>
+        <div class="step-time">⏱️ Under 2 minutes to sign</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== VIDEO SECTION ===== -->
+<section class="section video-section" id="video">
+  <div class="video-bg"></div>
+  <div class="container">
+    <div class="video-wrapper reveal">
+      <p class="section-eyebrow" style="color:var(--nexus-teal);text-align:center;">See It In Action</p>
+      <h2 class="video-title">Watch how Nexus Scribe works in a real clinical encounter</h2>
+      <p class="video-subtitle">2 minutes. No sales pitch. Just the technology working.</p>
+      <div class="video-frame" onclick="openModal(event)">
+        <div class="video-play-btn">
+          <svg width="22" height="26" viewBox="0 0 22 26" fill="white"><path d="M2 1l18 12L2 25V1z"/></svg>
+        </div>
+        <p class="video-caption"><strong>Nexus Intelligence Scribe</strong> — Live Demo Walk-through</p>
+        <p class="video-caption" style="font-size:12px; margin-top:4px;">Click to request access · Full video available for demo attendees</p>
+      </div>
+      <p style="color:rgba(255,255,255,0.35); font-size:12px; text-align:center; margin-top:16px;">Video production in progress — request an early-access live demo today</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TESTIMONIALS ===== -->
+<section class="section testimonials-section">
+  <div class="container">
+    <div class="section-header centered reveal">
+      <p class="section-eyebrow">What Doctors Are Saying</p>
+      <h2 class="section-title">Physicians who made the <em>switch</em></h2>
+      <p class="section-subtitle">Real testimonials from Nexus Clinical users — unedited, unsponsored.</p>
+    </div>
+
+    <div class="testimonials-grid">
+      <div class="testimonial-card reveal">
+        <div class="star-row">
+          <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+        </div>
+        <div class="quote-mark">"</div>
+        <p class="testimonial-text">We would like to take the time to express our extreme satisfaction with the work of Nexus Support. For the past 2 years they have been nothing but helpful to our practices, our staff and to us. They have consistently responded to our numerous questions and requests in a very courteous and efficient manner. Although we try to limit the number of staff contacting support, they have never denied a request from any of our staff. They have been quite an asset in helping us set up templates and “tweaking” the EMR to fit our needs. They have displayed a wide range of knowledge including adding employees to the EMR, understanding our particular clinical needs and even billing. Please accept our gratitude and thanks for their great work. They certainly are a fantastic representative of NEXUS.</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">
+  <img src="matt.png" alt="Dr. Mathew Sipple">
+</div>
+          <div>
+            <div class="author-name">Dr. Mathew Sipple</div>
+            <div class="author-title">Owner &amp; Founder · Bay City Psychiatry, LLC &amp; Center for Focused Care, LLC</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card reveal reveal-delay-1">
+        <div class="star-row">
+          <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+        </div>
+        <div class="quote-mark">"</div>
+        <p class="testimonial-text">I have been with Nexus Clinical now for about three years and I must say that we have been extremely satisfied with the product and with the customer service. Specifically, I have found the support, out of India, to be excellent, always available to me and highly professional. For the small 1-2 man practice, this product has been great. Attesting for meaningful use was made easy, the ability to write in on the exam, the history and the ROS has been made easy as well. The staff has found the EMR to be very user friendly, and it is very intuitive. I would recommend the Nexus Clinical EMR to small practices with 1-3 physicians without reservation</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">
+  <img src="nad.png" alt="Dr. Brian Nadolne">
+</div>
+          <div>
+            <div class="author-name">Dr. Brian K. Nadolne, MD</div>
+            <div class="author-title">General Surgeon · Nexus Clinical user since 2015</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card reveal reveal-delay-2">
+        <div class="star-row">
+          <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+        </div>
+        <div class="quote-mark">"</div>
+        <p class="testimonial-text">Nexus has become a very useful tool to help
+run my practice. I use it link effectively with my
+practice management software(billing). The
+software captures or inserts all the pertinent
+patient information necessary for an
+appropriate medical record. The transition to
+new diagnostic coding (ICD10) has been easily
+facilitated. Having the patient information
+stored in the cloud on Nexus server as
+opposed to my server had greatly simplified
+day to day operations. The customer support
+by the Nexus team is second to none</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">
+  <img src="edw.png" alt="Dr. Edward Rhomberg">
+</div>
+          <div>
+            <div class="author-name">Dr. Edward Rhomberg</div>
+            <div class="author-title">Private Practice Physician · Nexus Clinical user</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FEATURES GRID ===== -->
+<section class="section features-section">
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="section-eyebrow">Why Nexus Is Different</p>
+      <h2 class="section-title">Not an add-on. <em>An ecosystem.</em></h2>
+      <p class="section-subtitle">Nexus Intelligence Scribe is woven into the same platform where you schedule, prescribe, bill, and communicate with patients — not a third-party bolt-on.</p>
+    </div>
+
+    <div class="features-grid">
+      <div class="feature-card reveal">
+        <div class="feature-icon">🎙️</div>
+        <div class="feature-title">100% Native Integration</div>
+        <p class="feature-desc">Scribe is built inside Nexus EHR — same login, same screen, same workflow. No separate app. No data export. No HIPAA gray zones.</p>
+      </div>
+      <div class="feature-card reveal reveal-delay-1">
+        <div class="feature-icon">🧠</div>
+        <div class="feature-title">Specialty-Specific AI</div>
+        <p class="feature-desc">Trained on neurology, cardiology, psychiatry, general surgery, and more. Understands the precise terminology of your specialty, not generic medical language.</p>
+      </div>
+      <div class="feature-card reveal reveal-delay-2">
+        <div class="feature-icon">🔒</div>
+        <div class="feature-title">Full HIPAA Coverage</div>
+        <p class="feature-desc">Nexus holds the BAA for all audio data. Patient conversations are protected health information — we treat them that way. Always.</p>
+      </div>
+      <div class="feature-card reveal">
+        <div class="feature-icon">💰</div>
+        <div class="feature-title">ICD-10 &amp; CPT Suggestions</div>
+        <p class="feature-desc">The scribe doesn't just document — it suggests billing codes, improving coding accuracy and protecting your revenue cycle automatically.</p>
+      </div>
+      <div class="feature-card reveal reveal-delay-1">
+        <div class="feature-icon">⚡</div>
+        <div class="feature-title">2-Minute Sign-Off</div>
+        <p class="feature-desc">Review-ready notes delivered the moment the encounter ends. The physician's role becomes reviewer, not author. That's the difference.</p>
+      </div>
+      <div class="feature-card reveal reveal-delay-2">
+        <div class="feature-icon">📱</div>
+        <div class="feature-title">Any Device, Anywhere</div>
+        <p class="feature-desc">Cloud-based and browser-native. Access your EHR and scribe on any device — tablet, laptop, desktop — without installing software.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== COMPARISON TABLE ===== -->
+<section class="section comparison-section">
+  <div class="container">
+    <div class="section-header centered reveal">
+      <p class="section-eyebrow">Nexus vs. The Competition</p>
+      <h2 class="section-title">See the <em>difference</em> clearly</h2>
+      <p class="section-subtitle">Not all EHR scribes are created equal. See how Nexus stacks up on the features that matter most.</p>
+    </div>
+
+    <div class="reveal" style="overflow-x:auto;">
+      <table class="comparison-table">
+        <thead>
+          <tr>
+            <th class="col-feature">Feature</th>
+            <th class="col-nexus">
+              <div class="col-nexus-label">
+                Nexus Intelligence Scribe
+                <span class="col-nexus-badge">ONC Certified EHR</span>
+              </div>
+            </th>
+            <th class="col-competitor">Third-Party AI Scribe Add-ons</th>
+            <th class="col-competitor">Traditional EHR + Dictation</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Native EHR integration (no third-party app)</td>
+            <td><span class="check">✓</span></td>
+            <td><span class="cross">✗</span></td>
+            <td><span class="cross">✗</span></td>
+          </tr>
+          <tr>
+            <td>HIPAA BAA covers audio data</td>
+            <td><span class="check">✓</span></td>
+            <td><span class="partial">Varies</span></td>
+            <td><span class="check">✓</span></td>
+          </tr>
+          <tr>
+            <td>Specialty-specific clinical language</td>
+            <td><span class="check">✓</span></td>
+            <td><span class="partial">Limited</span></td>
+            <td><span class="cross">✗</span></td>
+          </tr>
+          <tr>
+            <td>Real-time ambient documentation</td>
+            <td><span class="check">✓</span></td>
+            <td><span class="partial">Some</span></td>
+            <td><span class="cross">✗</span></td>
+          </tr>
+          <tr>
+            <td>ICD-10 &amp; CPT code suggestions</td>
+            <td><span class="check">✓</span></td>
+            <td><span class="cross">✗</span></td>
+            <td><span class="cross">✗</span></td>
+          </tr>
+          <tr>
+            <td>Review &amp; sign in under 2 minutes</td>
+            <td><span class="check">✓</span></td>
+            <td><span class="partial">Often 5–10 min</span></td>
+            <td><span class="cross">✗</span></td>
+          </tr>
+          <tr>
+            <td>Integrated billing &amp; scheduling</td>
+            <td><span class="check">✓</span></td>
+            <td><span class="cross">✗</span></td>
+            <td><span class="partial">Separate module</span></td>
+          </tr>
+          <tr>
+            <td>No additional per-provider licensing fee</td>
+            <td><span class="check">✓</span></td>
+            <td><span class="cross">✗</span></td>
+            <td><span class="check">✓</span></td>
+          </tr>
+          <tr>
+            <td>ONC-certified EHR platform</td>
+            <td><span class="check">✓</span></td>
+            <td><span class="cross">N/A</span></td>
+            <td><span class="partial">Varies</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="comparison-disclaimer reveal">
+      * This comparison is based on publicly available information and Nexus Clinical's understanding of the market as of 2025–2026. Individual products vary — we encourage you to verify claims with each vendor directly. "Third-party AI Scribe Add-ons" refers to standalone AI scribing solutions that require separate licensing and integration with an EHR. "Traditional EHR + Dictation" refers to conventional voice-to-text or manual transcription workflows. This table does not reference or disparage any specific named competitor. All Nexus capabilities referenced herein are available in the current platform as of date of publication.
+    </p>
+  </div>
+</section>
+
+<!-- ===== FINAL CTA ===== -->
+<section class="section final-cta">
+  <div class="final-cta-bg"></div>
+  <div class="container">
+    <div class="final-cta-content reveal">
+      <p class="section-eyebrow" style="color:var(--nexus-teal);text-align:center;">Your Practice Deserves Better</p>
+      <h2 class="final-cta-title">Ready to <em>reclaim your life?</em></h2>
+      <p class="final-cta-subtitle">Join thousands of physicians who have rediscovered why they went into medicine. Schedule a personalized 30-minute demo — no commitment, no pressure.</p>
+      <div class="final-cta-buttons">
+        <a href="#" class="btn-primary-hero" onclick="openModal(event)">
+          Schedule My Free Demo
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="tel:+1-800-NEXUS-EHR" class="btn-ghost-white">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 8.81 19.79 19.79 0 01.04 2.18 2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+          Call Us Today
+        </a>
+      </div>
+      <p class="cta-micro">No contracts required · Set up in days · Dedicated onboarding support included</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <a href="#" class="footer-logo">
+    <div class="footer-logo-icon">N</div>
+    <div class="footer-logo-text">Nexus<span>Clinical</span></div>
+  </a>
+  <div class="footer-links">
+    <a href="https://www.nexusclinical.com">NexusClinical.com</a>
+    <a href="#">Privacy Policy</a>
+    <a href="#">Terms of Use</a>
+    <a href="#">HIPAA Notice</a>
+    <a href="#">Support</a>
+  </div>
+  <p class="footer-copy">
+    © 2026 Nexus Clinical LLC · Naples, Florida · ONC-Certified EHR Platform<br>
+    This page is part of the Nexus digital ad campaign infrastructure and is not linked in main site navigation.<br>
+    Nexus Clinical LLC is not affiliated with any third-party EHR or AI scribe vendor mentioned or implied in comparisons above.
+  </p>
+</footer>
+
+<!-- ===== DEMO MODAL ===== -->
+<div class="modal-overlay" id="demoModal" onclick="handleOverlayClick(event)">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <div class="modal-icon">📅</div>
+    <h3 class="modal-title">Book Your Free Demo</h3>
+    <p class="modal-subtitle">See Nexus Intelligence Scribe live in a 30-minute personalized walkthrough. No commitment required.</p>
+    <div class="modal-form">
+      <input type="text" class="modal-input" placeholder="First &amp; Last Name" />
+      <input type="email" class="modal-input" placeholder="Work Email Address" />
+      <input type="tel" class="modal-input" placeholder="Phone Number" />
+      <input type="text" class="modal-input" placeholder="Practice / Organization Name" />
+      <select class="modal-input" style="appearance:none; background:white; cursor:pointer;">
+        <option value="" disabled selected>Specialty</option>
+        <option>Family Medicine</option>
+        <option>Internal Medicine</option>
+        <option>Psychiatry</option>
+        <option>Cardiology</option>
+        <option>Neurology</option>
+        <option>General Surgery</option>
+        <option>Orthopedics</option>
+        <option>Other</option>
+      </select>
+      <button class="modal-submit" onclick="handleSubmit()">
+        Request My Demo →
+      </button>
+    </div>
+    <p class="modal-privacy">🔒 Your information is secure and will never be sold. HIPAA-compliant communication only.</p>
+  </div>
+</div>
+
+<script>
+  // Modal
+  function openModal(e) {
+    if (e) e.preventDefault();
+    document.getElementById('demoModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal() {
+    document.getElementById('demoModal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function handleOverlayClick(e) {
+    if (e.target === document.getElementById('demoModal')) closeModal();
+  }
+  function handleSubmit() {
+    const modal = document.querySelector('.modal-box');
+    modal.innerHTML = `
+      <div style="text-align:center; padding:20px 0;">
+        <div style="width:72px;height:72px;background:rgba(0,168,181,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:32px;">✓</div>
+        <h3 style="font-family:'DM Serif Display',serif;font-size:26px;color:#0B2545;margin-bottom:12px;">You're on the list!</h3>
+        <p style="font-size:15px;color:#6B7E99;line-height:1.6;margin-bottom:28px;">A Nexus Clinical specialist will reach out within 1 business day to schedule your personalized demo.</p>
+        <button onclick="closeModal()" style="background:#00A8B5;color:white;font-weight:700;font-size:15px;padding:13px 28px;border-radius:100px;border:none;cursor:pointer;">Close</button>
+      </div>
+    `;
+  }
+
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('revealed');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el => observer.observe(el));
+
+  // Sticky header hide on scroll up
+  let lastScroll = 0;
+  window.addEventListener('scroll', () => {
+    const current = window.scrollY;
+    const header = document.getElementById('stickyHeader');
+    if (current < 100) {
+      header.classList.remove('hidden');
+    }
+    lastScroll = current;
+  }, { passive: true });
+
+  // Hide fallback badges if real images load
+  const imgs = document.querySelectorAll('.trust-badge-img');
+  let loadedCount = 0;
+  imgs.forEach(img => {
+    img.addEventListener('load', () => {
+      loadedCount++;
+      if (loadedCount > 0) {
+        const fb = document.getElementById('fallbackBadges');
+        if (fb) fb.style.display = 'none';
+      }
+    });
+  });
+
+  // Force trigger reveals already in view
+  setTimeout(() => {
+    revealEls.forEach(el => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight) {
+        el.classList.add('revealed');
+      }
+    });
+  }, 100);
+</script>
+</body>
+</html>
